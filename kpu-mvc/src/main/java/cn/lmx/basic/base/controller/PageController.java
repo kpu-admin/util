@@ -39,7 +39,6 @@ public interface PageController<Id extends Serializable, Entity extends SuperEnt
      * 处理查询参数
      *
      * @param params 前端传递的参数
-     * @author lmx
      * @date 2025-01-01 00:00
      * @create [2025-01-01 00:00 ] [lmx] [初始创建]
      */

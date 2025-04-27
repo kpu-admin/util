@@ -45,7 +45,6 @@ public class EchoAutoConfiguration {
      *
      * @param strategyMap 回显查询实例
      * @return cn.lmx.basic.echo.core.EchoService
-     * @author lmx
      * @date 2025-01-01 00:00
      * @create [2025-01-01 00:00 ] [lmx] [初始创建]
      */

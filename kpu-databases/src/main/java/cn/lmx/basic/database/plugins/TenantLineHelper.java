@@ -17,7 +17,6 @@ public class TenantLineHelper {
      * 判断 mapper id 是否启用了 @TenantLine 注解
      *
      * @param id mapper 唯一
-     * @author lmx
      * @date 2025-01-01 00:00
      * @create [2025-01-01 00:00 ] [lmx] [初始创建]
      */
