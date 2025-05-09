@@ -1,6 +1,8 @@
 package cn.lmx.basic.scan.utils;
 
 import cn.hutool.core.util.StrUtil;
+import cn.lmx.basic.scan.model.SystemApiVO;
+import cn.lmx.basic.utils.StrPool;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -13,8 +15,6 @@ import org.springframework.web.servlet.mvc.condition.PatternsRequestCondition;
 import org.springframework.web.servlet.mvc.condition.RequestMethodsRequestCondition;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
-import cn.lmx.basic.scan.model.SystemApiVO;
-import cn.lmx.basic.utils.StrPool;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -111,7 +111,7 @@ public class RequestMappingScanUtils {
 
             Operation apiOperation = method.getMethodAnnotation(Operation.class);
             if (apiOperation != null) {
-                name += "-" + (StrUtil.isNotEmpty(apiOperation.summary()) ? apiOperation.summary() : apiOperation.description());
+                name += (StrUtil.isNotEmpty(apiOperation.summary()) ? apiOperation.summary() : apiOperation.description());
             } else {
                 name += methodName;
             }
