@@ -14,14 +14,15 @@ import java.util.List;
 public class GsonTool {
 
     private static Gson gson = null;
+
     static {
-            gson= new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+        gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
     }
 
     /**
      * Object 转成 json
      *
-     * @param src
+     * @param src 对象
      * @return String
      */
     public static String toJson(Object src) {
@@ -31,9 +32,9 @@ public class GsonTool {
     /**
      * json 转成 特定的cls的Object
      *
-     * @param json
-     * @param classOfT
-     * @return
+     * @param json json字符串
+     * @param classOfT 类型
+     * @return 对象类型
      */
     public static <T> T fromJson(String json, Class<T> classOfT) {
         return gson.fromJson(json, classOfT);
@@ -42,32 +43,14 @@ public class GsonTool {
     /**
      * json 转成 特定的 rawClass<classOfT> 的Object
      *
-     * @param json
-     * @param classOfT
-     * @param argClassOfT
+     * @param json json字符串
+     * @param classOfT 类型
+     * @param argClassOfT 类型的泛型
      * @return
      */
-    public static <T> T fromJson(String json, Class<T> classOfT, Class argClassOfT) {
+    public static <T> T fromJson(String json, Class<T> classOfT, Class<?> argClassOfT) {
         Type type = new ParameterizedType4ReturnT(classOfT, new Class[]{argClassOfT});
         return gson.fromJson(json, type);
-    }
-    public static class ParameterizedType4ReturnT implements ParameterizedType {
-        private final Class raw;
-        private final Type[] args;
-        public ParameterizedType4ReturnT(Class raw, Type[] args) {
-            this.raw = raw;
-            this.args = args != null ? args : new Type[0];
-        }
-        @Override
-        public Type[] getActualTypeArguments() {
-            return args;
-        }
-        @Override
-        public Type getRawType() {
-            return raw;
-        }
-        @Override
-        public Type getOwnerType() {return null;}
     }
 
     /**
@@ -83,6 +66,31 @@ public class GsonTool {
                 new TypeToken<List<T>>() {
                 }.getType()
         );
+    }
+
+    public static class ParameterizedType4ReturnT implements ParameterizedType {
+        private final Class<?> raw;
+        private final Type[] args;
+
+        public ParameterizedType4ReturnT(Class<?> raw, Type[] args) {
+            this.raw = raw;
+            this.args = args != null ? args : new Type[0];
+        }
+
+        @Override
+        public Type[] getActualTypeArguments() {
+            return args;
+        }
+
+        @Override
+        public Type getRawType() {
+            return raw;
+        }
+
+        @Override
+        public Type getOwnerType() {
+            return null;
+        }
     }
 
 }

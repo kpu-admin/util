@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @date 2025-01-01 00:00
  */
 public class TenantLineHelper {
-    final static Map<String, Boolean> CACHE = new ConcurrentHashMap<>();
+    static final Map<String, Boolean> CACHE = new ConcurrentHashMap<>();
 
     /**
      * 判断 mapper id 是否启用了 @TenantLine 注解

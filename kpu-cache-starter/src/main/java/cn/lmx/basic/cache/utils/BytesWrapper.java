@@ -1,6 +1,8 @@
 package cn.lmx.basic.cache.utils;
 
 /**
+ * 字节包装器
+ * @param <T> 实际值
  * @author lmx
  */
 public class BytesWrapper<T> implements Cloneable {

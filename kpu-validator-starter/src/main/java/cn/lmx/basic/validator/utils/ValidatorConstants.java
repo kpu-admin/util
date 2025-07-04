@@ -5,7 +5,7 @@ package cn.lmx.basic.validator.utils;
  * @version v1.0.0
  */
 public class ValidatorConstants {
-    public final static String PATTERN = "Pattern";
-    public final static String NOT_NULL = "NotNull";
-    public final static String MESSAGE = "message";
+    public static final String PATTERN = "Pattern";
+    public static final String NOT_NULL = "NotNull";
+    public static final String MESSAGE = "message";
 }

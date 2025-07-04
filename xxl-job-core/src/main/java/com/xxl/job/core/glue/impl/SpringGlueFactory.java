@@ -2,13 +2,13 @@ package com.xxl.job.core.glue.impl;
 
 import com.xxl.job.core.executor.impl.XxlJobSpringExecutor;
 import com.xxl.job.core.glue.GlueFactory;
+import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.annotation.AnnotationUtils;
 
-import jakarta.annotation.Resource;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
@@ -16,16 +16,16 @@ import java.lang.reflect.Modifier;
  * @author xuxueli 2018-11-01
  */
 public class SpringGlueFactory extends GlueFactory {
-    private static Logger logger = LoggerFactory.getLogger(SpringGlueFactory.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SpringGlueFactory.class);
 
 
     /**
      * inject action of spring
-     * @param instance
+     * @param instance 实例
      */
     @Override
-    public void injectService(Object instance){
-        if (instance==null) {
+    public void injectService(Object instance) {
+        if (instance == null) {
             return;
         }
 
@@ -45,33 +45,29 @@ public class SpringGlueFactory extends GlueFactory {
             if (AnnotationUtils.getAnnotation(field, Resource.class) != null) {
                 try {
                     Resource resource = AnnotationUtils.getAnnotation(field, Resource.class);
-                    if (resource.name()!=null && resource.name().length()>0){
+                    if (resource != null && resource.name() != null && !resource.name().isEmpty()) {
                         fieldBean = XxlJobSpringExecutor.getApplicationContext().getBean(resource.name());
-                    } else {
-                        fieldBean = XxlJobSpringExecutor.getApplicationContext().getBean(field.getName());
                     }
-                } catch (Exception e) {
+                } catch (Exception ignored) {
                 }
-                if (fieldBean==null ) {
+                if (fieldBean == null) {
                     fieldBean = XxlJobSpringExecutor.getApplicationContext().getBean(field.getType());
                 }
             } else if (AnnotationUtils.getAnnotation(field, Autowired.class) != null) {
                 Qualifier qualifier = AnnotationUtils.getAnnotation(field, Qualifier.class);
-                if (qualifier!=null && qualifier.value()!=null && qualifier.value().length()>0) {
+                if (qualifier != null && !qualifier.value().isEmpty()) {
                     fieldBean = XxlJobSpringExecutor.getApplicationContext().getBean(qualifier.value());
                 } else {
                     fieldBean = XxlJobSpringExecutor.getApplicationContext().getBean(field.getType());
                 }
             }
 
-            if (fieldBean!=null) {
+            if (fieldBean != null) {
                 field.setAccessible(true);
                 try {
                     field.set(instance, fieldBean);
-                } catch (IllegalArgumentException e) {
-                    logger.error(e.getMessage(), e);
-                } catch (IllegalAccessException e) {
-                    logger.error(e.getMessage(), e);
+                } catch (IllegalArgumentException | IllegalAccessException e) {
+                    LOGGER.error(e.getMessage(), e);
                 }
             }
         }

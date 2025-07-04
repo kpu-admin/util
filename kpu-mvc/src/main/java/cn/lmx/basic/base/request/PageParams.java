@@ -23,6 +23,7 @@ import java.util.Map;
 /**
  * 分页参数
  *
+ * @param <T> 分页业务参数
  * @author lmx
  * @date 2025-01-01 00:00
  */
@@ -112,11 +113,11 @@ public class PageParams<T> {
      */
     @JsonIgnore
     public long offset() {
-        long current = this.current;
-        if (current <= 1L) {
+        long curr = this.current;
+        if (curr <= 1L) {
             return 0L;
         }
-        return (current - 1) * this.size;
+        return (curr - 1) * this.size;
     }
 
     @JsonIgnore

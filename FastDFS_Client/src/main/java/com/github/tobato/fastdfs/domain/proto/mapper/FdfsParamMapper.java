@@ -17,29 +17,27 @@ import java.util.Map;
  */
 public class FdfsParamMapper {
 
+    /**
+     * 对象映射缓存
+     */
+    private static Map<String, ObjectMetaData> mapCache = new HashMap<String, ObjectMetaData>();
+    /**
+     * 日志
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(FdfsParamMapper.class);
+
     private FdfsParamMapper() {
         // hide for utils
     }
 
     /**
-     * 对象映射缓存
-     */
-    private static Map<String, ObjectMetaData> mapCache = new HashMap<String, ObjectMetaData>();
-
-    /**
-     * 日志
-     */
-    private static Logger LOGGER = LoggerFactory.getLogger(FdfsParamMapper.class);
-
-
-    /**
      * 将byte解码为对象
      *
-     * @param content
-     * @param genericType
-     * @param charset
-     * @param <T>
-     * @return
+     * @param content 数据
+     * @param genericType 对象类型
+     * @param charset 字符集
+     * @param <T> 对象泛型
+     * @return 对象
      */
     public static <T> T map(byte[] content, Class<T> genericType, Charset charset) {
         // 获取映射对象
@@ -65,8 +63,8 @@ public class FdfsParamMapper {
     /**
      * 获取对象映射定义
      *
-     * @param genericType
-     * @return
+     * @param genericType 对象类型
+     * @return 元数据
      */
     public static <T> ObjectMetaData getObjectMap(Class<T> genericType) {
         if (null == mapCache.get(genericType.getName())) {
@@ -79,13 +77,14 @@ public class FdfsParamMapper {
     /**
      * 按列顺序映射
      *
-     * @param content
-     * @param genericType
-     * @param objectMap
-     * @return
-     * @throws InstantiationException
-     * @throws IllegalAccessException
-     * @throws InvocationTargetException
+     * @param content 数据
+     * @param genericType 对象类型
+     * @param objectMap 元数据
+     * @param charset 字符集
+     * @return 对象
+     * @throws InstantiationException 异常
+     * @throws IllegalAccessException 异常
+     * @throws InvocationTargetException 异常
      */
     private static <T> T mapByIndex(byte[] content, Class<T> genericType, ObjectMetaData objectMap, Charset charset)
             throws InstantiationException, IllegalAccessException, InvocationTargetException {
@@ -95,7 +94,7 @@ public class FdfsParamMapper {
         for (int i = 0; i < mappingFields.size(); i++) {
             FieldMetaData field = mappingFields.get(i);
             // 设置属性值
-            LOGGER.debug("设置值是 " + field + field.getValue(content, charset));
+            LOGGER.debug("设置值是 {} = {}", field, field.getValue(content, charset));
             BeanUtils.setProperty(obj, field.getFieldName(), field.getValue(content, charset));
         }
 
@@ -105,9 +104,9 @@ public class FdfsParamMapper {
     /**
      * 序列化为Byte
      *
-     * @param object
-     * @param charset
-     * @return
+     * @param object 对象
+     * @param charset 字符集
+     * @return 字节
      */
     public static byte[] toByte(Object object, Charset charset) {
         ObjectMetaData objectMap = getObjectMap(object.getClass());
@@ -129,13 +128,13 @@ public class FdfsParamMapper {
     /**
      * 将属性转换为byte
      *
-     * @param objectMap
-     * @param object
-     * @param charset
-     * @return
-     * @throws IllegalAccessException
-     * @throws InvocationTargetException
-     * @throws NoSuchMethodException
+     * @param objectMap 元数据
+     * @param object 对象
+     * @param charset 字符集
+     * @return 数据
+     * @throws IllegalAccessException 异常
+     * @throws InvocationTargetException 异常
+     * @throws NoSuchMethodException 异常
      */
     private static byte[] convertFieldToByte(ObjectMetaData objectMap, Object object, Charset charset)
             throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {

@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 /**
  * 包括id、created_time、created_by字段的表继承的基础实体
  *
+ * @param <T> 主键类型
  * @author lmx
  * @date 2025-01-01 00:00
  */

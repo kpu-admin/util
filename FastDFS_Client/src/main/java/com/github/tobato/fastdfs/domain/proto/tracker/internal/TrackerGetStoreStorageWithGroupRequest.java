@@ -1,21 +1,22 @@
 package com.github.tobato.fastdfs.domain.proto.tracker.internal;
 
-import org.apache.commons.lang3.Validate;
-
 import com.github.tobato.fastdfs.domain.proto.CmdConstants;
 import com.github.tobato.fastdfs.domain.proto.FdfsRequest;
 import com.github.tobato.fastdfs.domain.proto.OtherConstants;
 import com.github.tobato.fastdfs.domain.proto.ProtoHead;
 import com.github.tobato.fastdfs.domain.proto.mapper.FdfsColumn;
+import lombok.Getter;
+import org.apache.commons.lang3.Validate;
 
 /**
  * 按分组获取存储节点
  *
  * @author tobato
  */
+@Getter
 public class TrackerGetStoreStorageWithGroupRequest extends FdfsRequest {
 
-    private static final byte withGroupCmd = CmdConstants.TRACKER_PROTO_CMD_SERVICE_QUERY_STORE_WITH_GROUP_ONE;
+    private static final byte WITH_GROUP_CMD = CmdConstants.TRACKER_PROTO_CMD_SERVICE_QUERY_STORE_WITH_GROUP_ONE;
 
     /**
      * 分组定义
@@ -26,16 +27,12 @@ public class TrackerGetStoreStorageWithGroupRequest extends FdfsRequest {
     /**
      * 获取存储节点
      *
-     * @param groupName
+     * @param groupName 分组
      */
     public TrackerGetStoreStorageWithGroupRequest(String groupName) {
         Validate.notBlank(groupName, "分组不能为空");
         this.groupName = groupName;
-        this.head = new ProtoHead(withGroupCmd);
-    }
-
-    public String getGroupName() {
-        return groupName;
+        this.head = new ProtoHead(WITH_GROUP_CMD);
     }
 
 }

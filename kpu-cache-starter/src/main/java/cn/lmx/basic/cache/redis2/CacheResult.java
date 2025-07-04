@@ -18,6 +18,7 @@ import java.util.Map;
 /**
  * 缓存返回对象
  *
+ * @param <T> 实际值
  * @author lmx
  * @version v1.0.0
  * @date 2025-01-01 00:00

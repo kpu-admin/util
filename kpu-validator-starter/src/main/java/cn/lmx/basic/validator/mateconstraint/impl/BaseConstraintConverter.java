@@ -1,9 +1,9 @@
 package cn.lmx.basic.validator.mateconstraint.impl;
 
 import cn.hutool.core.map.MapUtil;
-import jakarta.validation.constraints.Email;
 import cn.lmx.basic.validator.mateconstraint.IConstraintConverter;
 import cn.lmx.basic.validator.model.ConstraintInfo;
+import jakarta.validation.constraints.Email;
 
 import java.lang.annotation.Annotation;
 import java.util.Collections;

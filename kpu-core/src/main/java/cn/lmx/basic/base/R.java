@@ -14,6 +14,9 @@ import java.util.Map;
 
 
 /**
+ * 全局响应对象
+ *
+ * @param <T> 返回业务对象类型
  * @author lmx
  * @date 2025-01-01 00:00
  */

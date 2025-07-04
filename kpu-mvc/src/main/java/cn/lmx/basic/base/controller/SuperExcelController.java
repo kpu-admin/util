@@ -36,7 +36,13 @@ import java.util.List;
 
 /**
  * 导入导出
- *
+ * @param <PageQuery> 查询参数
+ * @param <ResultVO> 返回对象
+ * @param <SaveVO> 保存参数
+ * @param <UpdateVO> 修改参数
+ * @param <S>      Service
+ * @param <Id>     主键
+ * @param <Entity> 实体
  * @author lmx
  * @date 2025-01-01 00:00
  */
@@ -44,14 +50,13 @@ import java.util.List;
 public abstract class SuperExcelController<S extends SuperCacheService<Id, Entity>,
         Id extends Serializable, Entity extends SuperEntity<Id>, SaveVO, UpdateVO, PageQuery, ResultVO>
         extends SuperController<S, Id, Entity, SaveVO, UpdateVO, PageQuery, ResultVO> {
+    private static final String FILE_NAME = "filename";
+    protected Class<SaveVO> saveVOClass = currentSaveVOClass();
+
     @Override
     public SuperCacheService<Id, Entity> getSuperService() {
         return superService;
     }
-
-    private static final String FILE_NAME = "filename";
-
-    protected Class<SaveVO> saveVOClass = currentSaveVOClass();
 
     protected Class<SaveVO> currentSaveVOClass() {
         return (Class<SaveVO>) ReflectionKit.getSuperClassGenericType(this.getClass(), SuperExcelController.class, 3);

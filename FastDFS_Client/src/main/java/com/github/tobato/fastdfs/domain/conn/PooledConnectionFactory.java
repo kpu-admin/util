@@ -1,10 +1,8 @@
 package com.github.tobato.fastdfs.domain.conn;
 
-import com.github.tobato.fastdfs.FdfsClientConstants;
 import org.apache.commons.pool2.BaseKeyedPooledObjectFactory;
 import org.apache.commons.pool2.PooledObject;
 import org.apache.commons.pool2.impl.DefaultPooledObject;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import java.net.InetSocketAddress;
@@ -20,9 +18,12 @@ import java.nio.charset.Charset;
  * @author tobato
  */
 @Component
-@ConfigurationProperties(prefix = FdfsClientConstants.ROOT_CONFIG_PREFIX)
 public class PooledConnectionFactory extends BaseKeyedPooledObjectFactory<InetSocketAddress, Connection> {
 
+    /**
+     * 默认字符集
+     */
+    private static final String DEFAULT_CHARSET_NAME = "UTF-8";
     /**
      * 读取时间
      */
@@ -35,10 +36,6 @@ public class PooledConnectionFactory extends BaseKeyedPooledObjectFactory<InetSo
      * 字符集
      */
     private Charset charset;
-    /**
-     * 默认字符集
-     */
-    private static final String DEFAULT_CHARSET_NAME = "UTF-8";
     /**
      * 设置默认字符集
      */

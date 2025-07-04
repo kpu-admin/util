@@ -4,6 +4,12 @@ import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.CharUtil;
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.lmx.basic.utils.StrPool;
+import cn.lmx.basic.validator.mateconstraint.IConstraintConverter;
+import cn.lmx.basic.validator.mateconstraint.impl.*;
+import cn.lmx.basic.validator.model.ConstraintInfo;
+import cn.lmx.basic.validator.model.FieldValidatorDesc;
+import cn.lmx.basic.validator.model.ValidConstraint;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Validator;
 import jakarta.validation.metadata.PropertyDescriptor;
@@ -13,17 +19,6 @@ import org.hibernate.validator.internal.metadata.BeanMetaDataManager;
 import org.hibernate.validator.internal.metadata.aggregated.BeanMetaData;
 import org.hibernate.validator.internal.metadata.core.MetaConstraint;
 import org.hibernate.validator.internal.metadata.location.ConstraintLocation;
-import cn.lmx.basic.utils.StrPool;
-import cn.lmx.basic.validator.mateconstraint.IConstraintConverter;
-import cn.lmx.basic.validator.mateconstraint.impl.DigitsConstraintConverter;
-import cn.lmx.basic.validator.mateconstraint.impl.MaxMinConstraintConverter;
-import cn.lmx.basic.validator.mateconstraint.impl.NotNullConstraintConverter;
-import cn.lmx.basic.validator.mateconstraint.impl.OtherConstraintConverter;
-import cn.lmx.basic.validator.mateconstraint.impl.RangeConstraintConverter;
-import cn.lmx.basic.validator.mateconstraint.impl.RegExConstraintConverter;
-import cn.lmx.basic.validator.model.ConstraintInfo;
-import cn.lmx.basic.validator.model.FieldValidatorDesc;
-import cn.lmx.basic.validator.model.ValidConstraint;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -37,7 +32,34 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static cn.lmx.basic.utils.StrPool.*;
+import static cn.lmx.basic.utils.StrPool.ARRAY;
+import static cn.lmx.basic.utils.StrPool.BASE_BOOLEAN_TYPE_NAME;
+import static cn.lmx.basic.utils.StrPool.BASE_CHAR_TYPE_NAME;
+import static cn.lmx.basic.utils.StrPool.BASE_DOUBLE_TYPE_NAME;
+import static cn.lmx.basic.utils.StrPool.BASE_FLOAT_TYPE_NAME;
+import static cn.lmx.basic.utils.StrPool.BASE_INTEGER_TYPE_NAME;
+import static cn.lmx.basic.utils.StrPool.BASE_LONG_TYPE_NAME;
+import static cn.lmx.basic.utils.StrPool.BASE_SHORT_TYPE_NAME;
+import static cn.lmx.basic.utils.StrPool.BOOLEAN;
+import static cn.lmx.basic.utils.StrPool.BOOLEAN_TYPE_NAME;
+import static cn.lmx.basic.utils.StrPool.COLLECTION_TYPE_NAME;
+import static cn.lmx.basic.utils.StrPool.DATE;
+import static cn.lmx.basic.utils.StrPool.DATETIME;
+import static cn.lmx.basic.utils.StrPool.DATE_TYPE_NAME;
+import static cn.lmx.basic.utils.StrPool.DOUBLE_TYPE_NAME;
+import static cn.lmx.basic.utils.StrPool.FLOAT;
+import static cn.lmx.basic.utils.StrPool.FLOAT_TYPE_NAME;
+import static cn.lmx.basic.utils.StrPool.INTEGER;
+import static cn.lmx.basic.utils.StrPool.INTEGER_TYPE_NAME;
+import static cn.lmx.basic.utils.StrPool.LIST_TYPE_NAME;
+import static cn.lmx.basic.utils.StrPool.LOCAL_DATE_TIME_TYPE_NAME;
+import static cn.lmx.basic.utils.StrPool.LOCAL_DATE_TYPE_NAME;
+import static cn.lmx.basic.utils.StrPool.LOCAL_TIME_TYPE_NAME;
+import static cn.lmx.basic.utils.StrPool.LONG_TYPE_NAME;
+import static cn.lmx.basic.utils.StrPool.SET_TYPE_NAME;
+import static cn.lmx.basic.utils.StrPool.SHORT_TYPE_NAME;
+import static cn.lmx.basic.utils.StrPool.STRING;
+import static cn.lmx.basic.utils.StrPool.TIME;
 import static cn.lmx.basic.validator.utils.ValidatorConstants.MESSAGE;
 import static cn.lmx.basic.validator.utils.ValidatorConstants.NOT_NULL;
 import static cn.lmx.basic.validator.utils.ValidatorConstants.PATTERN;
@@ -86,22 +108,20 @@ public class DefaultConstraintExtractImpl implements IConstraintExtract {
         }
         Map<String, FieldValidatorDesc> fieldValidatorDesc = new HashMap<>((int) (constraints.size() / 0.75 + 1));
         for (ValidConstraint constraint : constraints) {
-            doExtract(constraint, fieldValidatorDesc);
+            fieldValidatorDesc.putAll(doExtract(constraint));
         }
 
         return fieldValidatorDesc.values();
     }
 
 
-    private void doExtract(ValidConstraint constraint, Map<String, FieldValidatorDesc> fieldValidatorDesc) throws Exception {
+    private Map<String, FieldValidatorDesc> doExtract(ValidConstraint constraint) throws Exception {
         Class<?> targetClazz = constraint.getTarget();
         Class<?>[] groups = constraint.getGroups();
 
-        String key = targetClazz.getName() + StrPool.COLON +
-                Arrays.stream(groups).map(Class::getName).collect(Collectors.joining(StrPool.COLON));
+        String key = targetClazz.getName() + StrPool.COLON + Arrays.stream(groups).map(Class::getName).collect(Collectors.joining(StrPool.COLON));
         if (CACHE.containsKey(key)) {
-            fieldValidatorDesc.putAll(CACHE.get(key));
-            return;
+            return CACHE.get(key);
         }
 
         //测试一下这个方法
@@ -110,18 +130,19 @@ public class DefaultConstraintExtractImpl implements IConstraintExtract {
         BeanMetaData<?> res = beanMetaDataManager.getBeanMetaData(targetClazz);
         Set<MetaConstraint<?>> r = res.getMetaConstraints();
         Set<PropertyDescriptor> constrainedProperties = res.getBeanDescriptor().getConstrainedProperties();
+        Map<String, FieldValidatorDesc> fieldValidatorDesc = new HashMap<>();
         for (MetaConstraint<?> metaConstraint : r) {
             builderFieldValidatorDesc(metaConstraint, constrainedProperties, groups, fieldValidatorDesc);
         }
 
         CACHE.put(key, fieldValidatorDesc);
+        return fieldValidatorDesc;
     }
 
 
-    private void builderFieldValidatorDesc(MetaConstraint<?> metaConstraint,
-                                           Set<PropertyDescriptor> constraintDescriptors,
-                                           Class<?>[] groups,
-                                           Map<String, FieldValidatorDesc> fieldValidatorDesc) throws Exception {
+    private Map<String, FieldValidatorDesc> builderFieldValidatorDesc(MetaConstraint<?> metaConstraint,
+                                                                      Set<PropertyDescriptor> constraintDescriptors,
+                                                                      Class<?>[] groups, Map<String, FieldValidatorDesc> fieldValidatorDesc) throws Exception {
         //字段上的组
         Set<Class<?>> groupsMeta = metaConstraint.getGroupList();
         boolean isContainsGroup = false;
@@ -140,7 +161,7 @@ public class DefaultConstraintExtractImpl implements IConstraintExtract {
             }
         }
         if (!isContainsGroup) {
-            return;
+            return fieldValidatorDesc;
         }
 
         ConstraintLocation con = metaConstraint.getLocation();
@@ -157,7 +178,7 @@ public class DefaultConstraintExtractImpl implements IConstraintExtract {
             }
         }
         if (!flag) {
-            return;
+            return fieldValidatorDesc;
         }
         FieldValidatorDesc desc = fieldValidatorDesc.get(key);
         if (desc == null) {
@@ -186,13 +207,14 @@ public class DefaultConstraintExtractImpl implements IConstraintExtract {
             notNull.setAttrs(attrs);
             desc.getConstraints().add(notNull);
         }
+        return fieldValidatorDesc;
     }
 
 
     private String getType(String typeName) {
         if (StrUtil.startWithAny(typeName, SET_TYPE_NAME, LIST_TYPE_NAME, COLLECTION_TYPE_NAME, BASE_CHAR_TYPE_NAME)) {
             return ARRAY;
-        } else if (StrUtil.equalsAny(typeName, LONG_TYPE_NAME, INTEGER_TYPE_NAME, SHORT_TYPE_NAME, BASE_LONG_TYPE_NAME, BASE_INTEGER_TYPE_NAME, BASE_SHORT_TYPE_NAME)) {
+        } else if (StrUtil.equalsAny(typeName, INTEGER_TYPE_NAME, SHORT_TYPE_NAME, BASE_INTEGER_TYPE_NAME, BASE_SHORT_TYPE_NAME)) {
             return INTEGER;
         } else if (StrUtil.equalsAny(typeName, DOUBLE_TYPE_NAME, FLOAT_TYPE_NAME, BASE_FLOAT_TYPE_NAME, BASE_DOUBLE_TYPE_NAME)) {
             return FLOAT;
@@ -204,6 +226,8 @@ public class DefaultConstraintExtractImpl implements IConstraintExtract {
             return TIME;
         } else if (StrUtil.equalsAny(typeName, BOOLEAN_TYPE_NAME, BASE_BOOLEAN_TYPE_NAME)) {
             return BOOLEAN;
+        } else if (StrUtil.equalsAny(typeName, LONG_TYPE_NAME, BASE_LONG_TYPE_NAME)) {
+            return STRING;
         }
         return StrUtil.subAfter(typeName, CharUtil.DOT, true);
     }

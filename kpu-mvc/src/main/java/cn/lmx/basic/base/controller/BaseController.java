@@ -12,6 +12,7 @@ import java.io.Serializable;
 /**
  * 基础接口
  *
+ * @param <Id> 主键
  * @param <Entity> 实体
  * @author lmx
  * @date 2025-01-01 00:00

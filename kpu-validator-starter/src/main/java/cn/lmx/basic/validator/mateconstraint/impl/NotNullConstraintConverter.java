@@ -1,10 +1,10 @@
 package cn.lmx.basic.validator.mateconstraint.impl;
 
+import cn.lmx.basic.validator.mateconstraint.IConstraintConverter;
+import cn.lmx.basic.validator.utils.ValidatorConstants;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import cn.lmx.basic.validator.mateconstraint.IConstraintConverter;
-import cn.lmx.basic.validator.utils.ValidatorConstants;
 
 import java.lang.annotation.Annotation;
 import java.util.Arrays;

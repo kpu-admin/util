@@ -3,7 +3,12 @@ package cn.lmx.basic.validator.utils;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.lmx.basic.annotation.constraints.NotEmptyPattern;
 import cn.lmx.basic.exception.BizException;
+import cn.lmx.basic.validator.constraintvalidators.LengthConstraintValidator;
+import cn.lmx.basic.validator.constraintvalidators.NotEmptyConstraintValidator;
+import cn.lmx.basic.validator.constraintvalidators.NotEmptyPatternConstraintValidator;
+import cn.lmx.basic.validator.constraintvalidators.NotNullConstraintValidator;
 import com.alibaba.excel.annotation.ExcelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Configuration;
@@ -24,11 +29,6 @@ import org.hibernate.validator.internal.properties.DefaultGetterPropertySelectio
 import org.hibernate.validator.internal.properties.javabean.JavaBeanHelper;
 import org.hibernate.validator.spi.nodenameprovider.PropertyNodeNameProvider;
 import org.hibernate.validator.spi.properties.GetterPropertySelectionStrategy;
-import cn.lmx.basic.annotation.constraints.NotEmptyPattern;
-import cn.lmx.basic.validator.constraintvalidators.LengthConstraintValidator;
-import cn.lmx.basic.validator.constraintvalidators.NotEmptyConstraintValidator;
-import cn.lmx.basic.validator.constraintvalidators.NotEmptyPatternConstraintValidator;
-import cn.lmx.basic.validator.constraintvalidators.NotNullConstraintValidator;
 
 import java.lang.reflect.Field;
 import java.util.Iterator;
@@ -44,8 +44,8 @@ import java.util.Set;
 @Slf4j
 public class ValidatorUtils {
 
-    private final static Validator VALIDATOR_FAST = warp(Validation.byProvider(HibernateValidator.class).configure().failFast(true)).buildValidatorFactory().getValidator();
-    private final static Validator VALIDATOR_ALL = warp(Validation.byProvider(HibernateValidator.class).configure().failFast(false)).buildValidatorFactory().getValidator();
+    private static final Validator VALIDATOR_FAST = warp(Validation.byProvider(HibernateValidator.class).configure().failFast(true)).buildValidatorFactory().getValidator();
+    private static final Validator VALIDATOR_ALL = warp(Validation.byProvider(HibernateValidator.class).configure().failFast(false)).buildValidatorFactory().getValidator();
 
     /**
      * 校验遇到第一个不合法的字段直接返回不合法字段，后续字段不再校验

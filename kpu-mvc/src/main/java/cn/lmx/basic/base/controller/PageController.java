@@ -20,7 +20,9 @@ import java.io.Serializable;
 /**
  * 分页控制器
  *
+ * @param <Id>    主键
  * @param <Entity>    实体
+ * @param <ResultVO>   返回参数
  * @param <PageQuery> 分页参数
  * @author lmx
  * @date 2025-01-01 00:00

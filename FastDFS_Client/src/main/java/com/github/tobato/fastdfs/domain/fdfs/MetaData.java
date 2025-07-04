@@ -27,12 +27,12 @@ public class MetaData {
         return this.name;
     }
 
-    public String getValue() {
-        return this.value;
-    }
-
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getValue() {
+        return this.value;
     }
 
     public void setValue(String value) {
@@ -50,24 +50,28 @@ public class MetaData {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         MetaData other = (MetaData) obj;
         if (name == null) {
-            if (other.name != null)
+            if (other.name != null) {
                 return false;
-        } else if (!name.equals(other.name))
+            }
+        } else if (!name.equals(other.name)) {
             return false;
+        }
         if (value == null) {
-            if (other.value != null)
-                return false;
-        } else if (!value.equals(other.value))
-            return false;
-        return true;
+            return other.value == null;
+        } else {
+            return value.equals(other.value);
+        }
     }
 
     @Override

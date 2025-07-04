@@ -20,7 +20,7 @@ import java.util.Date;
  * Created by xuxueli on 17/3/1.
  */
 public class ExecutorBizImpl implements ExecutorBiz {
-    private static Logger logger = LoggerFactory.getLogger(ExecutorBizImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExecutorBizImpl.class);
 
     @Override
     public ReturnT<String> beat() {
@@ -38,7 +38,7 @@ public class ExecutorBizImpl implements ExecutorBiz {
         }
 
         if (isRunningOrHasQueue) {
-            return new ReturnT<String>(ReturnT.FAIL_CODE, "job thread is running or has trigger queue.");
+            return new ReturnT<>(ReturnT.FAIL_CODE, "job thread is running or has trigger queue.");
         }
         return ReturnT.SUCCESS;
     }
@@ -47,7 +47,7 @@ public class ExecutorBizImpl implements ExecutorBiz {
     public ReturnT<String> run(TriggerParam triggerParam) {
         // load old：jobHandler + jobThread
         JobThread jobThread = XxlJobExecutor.loadJobThread(triggerParam.getJobId());
-        IJobHandler jobHandler = jobThread!=null?jobThread.getHandler():null;
+        IJobHandler jobHandler = jobThread != null ? jobThread.getHandler() : null;
         String removeOldReason = null;
 
         // valid：jobHandler + jobThread
@@ -58,7 +58,7 @@ public class ExecutorBizImpl implements ExecutorBiz {
             IJobHandler newJobHandler = XxlJobExecutor.loadJobHandler(triggerParam.getExecutorHandler());
 
             // valid old jobThread
-            if (jobThread!=null && jobHandler != newJobHandler) {
+            if (jobThread != null && jobHandler != newJobHandler) {
                 // change handler, need kill old thread
                 removeOldReason = "change jobhandler or glue type, and terminate the old job thread.";
 
@@ -70,7 +70,7 @@ public class ExecutorBizImpl implements ExecutorBiz {
             if (jobHandler == null) {
                 jobHandler = newJobHandler;
                 if (jobHandler == null) {
-                    return new ReturnT<String>(ReturnT.FAIL_CODE, "job handler [" + triggerParam.getExecutorHandler() + "] not found.");
+                    return new ReturnT<>(ReturnT.FAIL_CODE, "job handler [" + triggerParam.getExecutorHandler() + "] not found.");
                 }
             }
 
@@ -78,8 +78,8 @@ public class ExecutorBizImpl implements ExecutorBiz {
 
             // valid old jobThread
             if (jobThread != null &&
-                    !(jobThread.getHandler() instanceof GlueJobHandler
-                        && ((GlueJobHandler) jobThread.getHandler()).getGlueUpdatetime()==triggerParam.getGlueUpdatetime() )) {
+                !(jobThread.getHandler() instanceof GlueJobHandler
+                  && ((GlueJobHandler) jobThread.getHandler()).getGlueUpdateTime() == triggerParam.getGlueUpdatetime())) {
                 // change handler or gluesource updated, need kill old thread
                 removeOldReason = "change job source or glue type, and terminate the old job thread.";
 
@@ -93,16 +93,16 @@ public class ExecutorBizImpl implements ExecutorBiz {
                     IJobHandler originJobHandler = GlueFactory.getInstance().loadNewInstance(triggerParam.getGlueSource());
                     jobHandler = new GlueJobHandler(originJobHandler, triggerParam.getGlueUpdatetime());
                 } catch (Exception e) {
-                    logger.error(e.getMessage(), e);
-                    return new ReturnT<String>(ReturnT.FAIL_CODE, e.getMessage());
+                    LOGGER.error(e.getMessage(), e);
+                    return new ReturnT<>(ReturnT.FAIL_CODE, e.getMessage());
                 }
             }
-        } else if (glueTypeEnum!=null && glueTypeEnum.isScript()) {
+        } else if (glueTypeEnum != null && glueTypeEnum.isScript()) {
 
             // valid old jobThread
             if (jobThread != null &&
-                    !(jobThread.getHandler() instanceof ScriptJobHandler
-                            && ((ScriptJobHandler) jobThread.getHandler()).getGlueUpdatetime()==triggerParam.getGlueUpdatetime() )) {
+                !(jobThread.getHandler() instanceof ScriptJobHandler
+                  && ((ScriptJobHandler) jobThread.getHandler()).getGlueUpdateTime() == triggerParam.getGlueUpdatetime())) {
                 // change script or gluesource updated, need kill old thread
                 removeOldReason = "change job source or glue type, and terminate the old job thread.";
 
@@ -115,7 +115,7 @@ public class ExecutorBizImpl implements ExecutorBiz {
                 jobHandler = new ScriptJobHandler(triggerParam.getJobId(), triggerParam.getGlueUpdatetime(), triggerParam.getGlueSource(), GlueTypeEnum.match(triggerParam.getGlueType()));
             }
         } else {
-            return new ReturnT<String>(ReturnT.FAIL_CODE, "glueType[" + triggerParam.getGlueType() + "] is not valid.");
+            return new ReturnT<>(ReturnT.FAIL_CODE, "glueType[" + triggerParam.getGlueType() + "] is not valid.");
         }
 
         // executor block strategy
@@ -124,7 +124,7 @@ public class ExecutorBizImpl implements ExecutorBiz {
             if (ExecutorBlockStrategyEnum.DISCARD_LATER == blockStrategy) {
                 // discard when running
                 if (jobThread.isRunningOrHasQueue()) {
-                    return new ReturnT<String>(ReturnT.FAIL_CODE, "block strategy effect："+ExecutorBlockStrategyEnum.DISCARD_LATER.getTitle());
+                    return new ReturnT<>(ReturnT.FAIL_CODE, "block strategy effect：" + ExecutorBlockStrategyEnum.DISCARD_LATER.getTitle());
                 }
             } else if (ExecutorBlockStrategyEnum.COVER_EARLY == blockStrategy) {
                 // kill running jobThread
@@ -133,8 +133,6 @@ public class ExecutorBizImpl implements ExecutorBiz {
 
                     jobThread = null;
                 }
-            } else {
-                // just queue trigger
             }
         }
 
@@ -144,8 +142,7 @@ public class ExecutorBizImpl implements ExecutorBiz {
         }
 
         // push data to queue
-        ReturnT<String> pushResult = jobThread.pushTriggerQueue(triggerParam);
-        return pushResult;
+        return jobThread.pushTriggerQueue(triggerParam);
     }
 
     @Override
@@ -157,7 +154,7 @@ public class ExecutorBizImpl implements ExecutorBiz {
             return ReturnT.SUCCESS;
         }
 
-        return new ReturnT<String>(ReturnT.SUCCESS_CODE, "job thread already killed.");
+        return new ReturnT<>(ReturnT.SUCCESS_CODE, "job thread already killed.");
     }
 
     @Override
@@ -166,7 +163,7 @@ public class ExecutorBizImpl implements ExecutorBiz {
         String logFileName = XxlJobFileAppender.makeLogFileName(new Date(logParam.getLogDateTim()), logParam.getLogId());
 
         LogResult logResult = XxlJobFileAppender.readLog(logFileName, logParam.getFromLineNum());
-        return new ReturnT<LogResult>(logResult);
+        return new ReturnT<>(logResult);
     }
 
 }

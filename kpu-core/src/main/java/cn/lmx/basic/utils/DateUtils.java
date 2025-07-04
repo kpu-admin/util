@@ -4,7 +4,6 @@ import cn.hutool.core.convert.Convert;
 import cn.hutool.core.date.LocalDateTimeUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
-import cn.lmx.basic.converter.String2DateConverter;
 import cn.lmx.basic.exception.BizException;
 
 import java.lang.management.ManagementFactory;
@@ -78,6 +77,19 @@ public final class DateUtils {
     public static final Map<String, String> DATE_TIME_FORMAT_MAP = new LinkedHashMap<>(15);
     public static final Map<String, String> LOCAL_DATE_FORMAT_MAP = new LinkedHashMap<>(10);
     public static final Map<String, String> LOCAL_TIME_FORMAT_MAP = new LinkedHashMap<>(10);
+    /**
+     * 一个月平均天数
+     */
+    public static final long MAX_MONTH_DAY = 30;
+    /**
+     * 3个月平均天数
+     */
+    public static final long MAX_3_MONTH_DAY = 90;
+    /**
+     * 一年平均天数
+     */
+    public static final long MAX_YEAR_DAY = 365;
+    private static final Map<String, String> DATE_FORMAT = new LinkedHashMap<>(5);
 
     static {
         // 日期时间
@@ -113,20 +125,6 @@ public final class DateUtils {
         DATE_TIME_FORMAT_MAP.put(DEFAULT_DATE_FORMAT_EN, DEFAULT_DATE_FORMAT_EN_MATCHES);
         DATE_TIME_FORMAT_MAP.put(DEFAULT_DATE_TIME_FORMAT_EN, DEFAULT_DATE_TIME_FORMAT_EN_MATCHES);
     }
-
-    /**
-     * 一个月平均天数
-     */
-    public static final long MAX_MONTH_DAY = 30;
-    /**
-     * 3个月平均天数
-     */
-    public static final long MAX_3_MONTH_DAY = 90;
-    /**
-     * 一年平均天数
-     */
-    public static final long MAX_YEAR_DAY = 365;
-    private static final Map<String, String> DATE_FORMAT = new LinkedHashMap<>(5);
 //--格式化日期start-----------------------------------------
 
     static {
@@ -444,30 +442,6 @@ public final class DateUtils {
             }
         }
         throw new IllegalArgumentException("无效的日期参数格式:'" + sourceTrim + "'");
-    }
-
-    public static void main(String[] args) {
-        System.out.println(parseAsDateTime("2012-12-14 22:22:33"));
-        System.out.println(parseAsDateTime("2012-12-14 22:22"));
-        System.out.println(parseAsDateTime("2012-12-14 22"));
-        System.out.println(parseAsDateTime("2012-01-22"));
-
-        System.out.println(parseAsDateTime("2012-01-22"));
-        System.out.println(parseAsDateTime("2012/01/22"));
-
-//        System.out.println(parseAsDateTime("22:22:33"));
-//        System.out.println(parseAsDateTime("22时22分33秒"));
-
-
-        System.out.println(new String2DateConverter().convert("2012-12-14 22:22:33"));
-        System.out.println(new String2DateConverter().convert("2012-01-22"));
-
-        System.out.println(new String2DateConverter().convert("2012-01-22"));
-        System.out.println(new String2DateConverter().convert("2012/01/22"));
-//        System.out.println(new String2DateConverter().convert("2012/01=22"));
-
-//        System.out.println(new String2DateConverter().convert("22:22:33"));
-//        System.out.println(new String2DateConverter().convert("22时22分33秒"));
     }
 
     /**
@@ -1065,7 +1039,6 @@ public final class DateUtils {
         long time = ManagementFactory.getRuntimeMXBean().getStartTime();
         return new Date(time);
     }
-
 
     /**
      * 转换时间显示方式

@@ -1,14 +1,12 @@
 package com.github.tobato.fastdfs.domain.conn;
 
-import com.github.tobato.fastdfs.FdfsClientConstants;
 import com.github.tobato.fastdfs.domain.fdfs.TrackerLocator;
 import com.github.tobato.fastdfs.domain.proto.FdfsCommand;
 import com.github.tobato.fastdfs.exception.FdfsConnectException;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
-
 import jakarta.annotation.PostConstruct;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.stereotype.Component;
+
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +17,6 @@ import java.util.List;
  * @author tobato
  */
 @Component
-@ConfigurationProperties(prefix = FdfsClientConstants.ROOT_CONFIG_PREFIX)
 public class TrackerConnectionManager extends FdfsConnectionManager {
 
     /**

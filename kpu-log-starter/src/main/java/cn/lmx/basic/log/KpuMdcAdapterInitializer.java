@@ -1,6 +1,5 @@
 package cn.lmx.basic.log;
 
-import org.slf4j.KpuMdcAdapter;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.lang.NonNull;

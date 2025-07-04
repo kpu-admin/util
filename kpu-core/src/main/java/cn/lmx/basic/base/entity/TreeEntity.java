@@ -16,6 +16,8 @@ import java.util.List;
 /**
  * 包括id、created_time、created_by、updated_by、updated_time、label、parent_id、sort_value 字段的表继承的树形实体
  *
+ * @param <T> 主键类型
+ * @param <E> 子集类型
  * @author lmx
  * @date 2025-01-01 00:00
  */

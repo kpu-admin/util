@@ -19,6 +19,8 @@ import java.io.Serializable;
  * @param <S>      Service
  * @param <Id>     主键
  * @param <Entity> 实体
+ * @param <SaveVO> 保存参数
+ * @param <UpdateVO> 修改参数
  * @author lmx
  * @date 2025-01-01 00:00
  */

@@ -21,21 +21,19 @@ import java.util.Set;
 public class DefaultGenerateStorageClient implements GenerateStorageClient {
 
     /**
+     * 日志
+     */
+    protected static final Logger LOGGER = LoggerFactory.getLogger(DefaultGenerateStorageClient.class);
+    /**
      * trackerClient
      */
     @Autowired
     protected TrackerClient trackerClient;
-
     /**
      * connectManager
      */
     @Autowired
     protected FdfsConnectionManager fdfsConnectionManager;
-
-    /**
-     * 日志
-     */
-    protected static Logger LOGGER = LoggerFactory.getLogger(DefaultGenerateStorageClient.class);
 
     /**
      * 上传不支持断点续传的文件

@@ -15,8 +15,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import net.sf.jsqlparser.expression.Expression;
-import net.sf.jsqlparser.expression.Parenthesis;
-import net.sf.jsqlparser.expression.RowConstructor;
 import net.sf.jsqlparser.expression.StringValue;
 import net.sf.jsqlparser.expression.operators.relational.EqualsTo;
 import net.sf.jsqlparser.expression.operators.relational.ExpressionList;
@@ -132,7 +130,8 @@ public class KpuTenantLineInnerInterceptor extends BaseMultiTableInnerIntercepto
             if (expressions instanceof ParenthesedExpressionList) {
                 expressions.addExpression(tenantId);
             } else {
-                if (CollectionUtils.isNotEmpty(expressions)) {//fix github issue 4998 jsqlparse 4.5 批量insert ItemsList不是MultiExpressionList 了，需要特殊处理
+                if (CollectionUtils.isNotEmpty(expressions)) {
+                    //fix github issue 4998 jsqlparse 4.5 批量insert ItemsList不是MultiExpressionList 了，需要特殊处理
                     int len = expressions.size();
                     for (int i = 0; i < len; i++) {
                         Expression expression = expressions.get(i);

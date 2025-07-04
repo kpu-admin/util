@@ -28,6 +28,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * 自定义枚举属性转换器
  *
+ * @param <E> 枚举类型
  * @author hubin
  * @since 2025-01-01 00:00
  */

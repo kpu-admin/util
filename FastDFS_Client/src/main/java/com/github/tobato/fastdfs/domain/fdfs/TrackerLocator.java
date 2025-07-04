@@ -30,12 +30,12 @@ public class TrackerLocator {
     /**
      * 目录服务地址-为了加速处理，增加了一个map
      */
-    private Map<InetSocketAddress, TrackerAddressHolder> trackerAddressMap = new HashMap<>();
+    private final Map<InetSocketAddress, TrackerAddressHolder> trackerAddressMap = new HashMap<>();
 
     /**
      * 轮询圈
      */
-    private CircularList<TrackerAddressHolder> trackerAddressCircular = new CircularList<>();
+    private final CircularList<TrackerAddressHolder> trackerAddressCircular = new CircularList<>();
 
     /**
      * 连接中断以后经过N秒重试
@@ -46,7 +46,7 @@ public class TrackerLocator {
      * 初始化Tracker服务器地址
      * 配置方式为 ip:port 如 192.168.1.2:21000
      *
-     * @param trackerList
+     * @param trackerList Tracker服务器列表
      */
     public TrackerLocator(List<String> trackerList) {
         super();
@@ -80,10 +80,6 @@ public class TrackerLocator {
 
     }
 
-    public void setTrackerList(List<String> trackerList) {
-        this.trackerList = trackerList;
-    }
-
     public void setRetryAfterSecond(int retryAfterSecond) {
         this.retryAfterSecond = retryAfterSecond;
     }
@@ -111,7 +107,7 @@ public class TrackerLocator {
      * @return trackerAddressConfig
      */
     private String getTrackerAddressConfigString() {
-        StringBuffer config = new StringBuffer();
+        StringBuilder config = new StringBuilder();
         for (int i = 0; i < trackerAddressCircular.size(); i++) {
             TrackerAddressHolder holder = trackerAddressCircular.next();
             InetSocketAddress address = holder.getAddress();
@@ -133,7 +129,7 @@ public class TrackerLocator {
     /**
      * 设置连接无效
      *
-     * @param address
+     * @param address 地址
      */
     public void setInActive(InetSocketAddress address) {
         TrackerAddressHolder holder = trackerAddressMap.get(address);
@@ -142,6 +138,10 @@ public class TrackerLocator {
 
     public List<String> getTrackerList() {
         return Collections.unmodifiableList(trackerList);
+    }
+
+    public void setTrackerList(List<String> trackerList) {
+        this.trackerList = trackerList;
     }
 
 }
