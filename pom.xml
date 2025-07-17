@@ -41,6 +41,9 @@
         <!-- 代为维护的其他第三方组件 -->
         <module>FastDFS_Client</module>
         <module>xxl-job-core</module>
+        <module>sop-service-support</module>
+        <module>sop-spring-boot-starter</module>
+
     </modules>
     <licenses>
         <license>

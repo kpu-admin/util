@@ -27,6 +27,8 @@
         <spring-cloud-dependencies.version>2024.0.1</spring-cloud-dependencies.version>
         <spring-cloud-alibaba-dependencies.version>2023.0.1.2</spring-cloud-alibaba-dependencies.version>
         <spring-framework.version>6.2.5</spring-framework.version>
+        <dubbo.version>3.3.4</dubbo.version>
+        <smart-doc.version>3.1.0</smart-doc.version>
         <seata.version>2.0.0</seata.version>
         <nacos.version>2.5.1</nacos.version>
         <sentinel.version>1.8.6</sentinel.version>
@@ -88,6 +90,7 @@
         <sun-jaxb.version>2.3.0.1</sun-jaxb.version>
         <okio.version>2.10.0</okio.version>
         <okhttp3.version>4.10.0</okhttp3.version>
+        <smart-doc.version>3.1.0</smart-doc.version>
     </properties>
 
     <distributionManagement>
@@ -117,6 +120,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-framework-bom</artifactId>
@@ -124,6 +128,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
             <dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi</artifactId>
@@ -131,6 +136,14 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-bom</artifactId>
+                <version>${dubbo.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
 
             <!-- 以上几个配置的顺序不能错，否则会导致 spring、springdoc 的版本不正确 -->
             <dependency>
@@ -526,11 +539,11 @@
             <name>aliyun</name>
             <url>https://maven.aliyun.com/nexus/content/groups/public/</url>
         </repository>
-<!--        <repository>-->
-<!--            <id>spring-milestones</id>-->
-<!--            <name>Spring Milestones</name>-->
-<!--            <url>https://repo.spring.io/libs-milestone</url>-->
-<!--        </repository>-->
+        <!--        <repository>-->
+        <!--            <id>spring-milestones</id>-->
+        <!--            <name>Spring Milestones</name>-->
+        <!--            <url>https://repo.spring.io/libs-milestone</url>-->
+        <!--        </repository>-->
         <repository>
             <id>oss-public</id>
             <url>https://s01.oss.sonatype.org/content/repositories/public</url>
