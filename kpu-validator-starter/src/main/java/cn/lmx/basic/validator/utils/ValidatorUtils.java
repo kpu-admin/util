@@ -9,7 +9,7 @@ import cn.lmx.basic.validator.constraintvalidators.LengthConstraintValidator;
 import cn.lmx.basic.validator.constraintvalidators.NotEmptyConstraintValidator;
 import cn.lmx.basic.validator.constraintvalidators.NotEmptyPatternConstraintValidator;
 import cn.lmx.basic.validator.constraintvalidators.NotNullConstraintValidator;
-import com.alibaba.excel.annotation.ExcelProperty;
+import cn.idev.excel.annotation.ExcelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Configuration;
 import jakarta.validation.ConstraintViolation;

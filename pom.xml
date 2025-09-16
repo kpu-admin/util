@@ -6,12 +6,12 @@
     <parent>
         <groupId>cn.lmx.basic</groupId>
         <artifactId>kpu-parent</artifactId>
-        <version>1.0.0</version>
+        <version>${revision}</version>
         <relativePath>kpu-parent/pom.xml</relativePath>
     </parent>
 
     <artifactId>kpu-util</artifactId>
-    <version>1.0.0</version>
+    <version>${revision}</version>
 
     <packaging>pom</packaging>
     <modelVersion>4.0.0</modelVersion>
@@ -20,6 +20,7 @@
     <description>kpu项目公共模块</description>
 
     <modules>
+        <module>kpu-bom</module>
         <module>kpu-parent</module>
         <module>kpu-annotation</module>
         <module>kpu-core</module>
@@ -35,15 +36,14 @@
         <module>kpu-cache-starter</module>
         <module>kpu-mq-starter</module>
         <module>kpu-echo-starter</module>
-        <module>kpu-uid</module>
         <module>kpu-scan-starter</module>
         <module>kpu-all</module>
         <!-- 代为维护的其他第三方组件 -->
-        <module>FastDFS_Client</module>
-        <module>xxl-job-core</module>
+        <module>kpu-uid</module>
         <module>sop-service-support</module>
         <module>sop-spring-boot-starter</module>
-
+        <module>FastDFS_Client</module>
+        <module>xxl-job-core</module>
     </modules>
     <licenses>
         <license>
@@ -53,6 +53,18 @@
             <comments>A business-friendly OSS license</comments>
         </license>
     </licenses>
+
+    <developers>
+        <developer>
+            <id>zuihou</id>
+            <name>zuihou</name>
+            <email>306479353@qq.com</email>
+            <roles>
+                <role>Java Development Engineer</role>
+            </roles>
+            <timezone>2020-03-12 17:50:10</timezone>
+        </developer>
+    </developers>
 
     <distributionManagement>
         <snapshotRepository>
@@ -69,88 +81,10 @@
         <dependencies>
             <dependency>
                 <groupId>cn.lmx.basic</groupId>
-                <artifactId>kpu-all</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.lmx.basic</groupId>
-                <artifactId>kpu-annotation</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.lmx.basic</groupId>
-                <artifactId>kpu-webmvc</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.lmx.basic</groupId>
-                <artifactId>kpu-cache-starter</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.lmx.basic</groupId>
-                <artifactId>kpu-cloud-starter</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.lmx.basic</groupId>
-                <artifactId>kpu-core</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.lmx.basic</groupId>
-                <artifactId>kpu-databases</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.lmx.basic</groupId>
-                <artifactId>kpu-dozer-starter</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.lmx.basic</groupId>
-                <artifactId>kpu-echo-starter</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.lmx.basic</groupId>
-                <artifactId>kpu-log-starter</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.lmx.basic</groupId>
-                <artifactId>kpu-mq-starter</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.lmx.basic</groupId>
-                <artifactId>kpu-mvc</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.lmx.basic</groupId>
-                <artifactId>kpu-scan-starter</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.lmx.basic</groupId>
-                <artifactId>kpu-swagger2-starter</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.lmx.basic</groupId>
-                <artifactId>kpu-uid</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.lmx.basic</groupId>
-                <artifactId>kpu-validator-starter</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.lmx.basic</groupId>
-                <artifactId>kpu-xss-starter</artifactId>
-                <version>${project.version}</version>
+                <artifactId>kpu-bom</artifactId>
+                <version>${revision}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

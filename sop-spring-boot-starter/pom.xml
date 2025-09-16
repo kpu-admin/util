@@ -7,7 +7,7 @@
     <parent>
         <groupId>cn.lmx.basic</groupId>
         <artifactId>kpu-util</artifactId>
-        <version>1.0.0</version>
+        <version>${revision}</version>
     </parent>
 
     <groupId>cn.lmx.basic</groupId>
@@ -18,7 +18,7 @@
         <dependency>
             <groupId>cn.lmx.basic</groupId>
             <artifactId>sop-service-support</artifactId>
-            <version>1.0.0</version>
+            <version>${revision}</version>
         </dependency>
         <!-- 文档插件 -->
 <!--        <dependency>-->

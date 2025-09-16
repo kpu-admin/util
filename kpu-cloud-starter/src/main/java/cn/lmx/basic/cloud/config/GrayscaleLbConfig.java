@@ -5,6 +5,7 @@ import org.springframework.cloud.loadbalancer.core.ReactorLoadBalancer;
 import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
 import org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
 import cn.lmx.basic.cloud.rule.GrayscaleVersionRoundRobinLoadBalancer;
 import cn.lmx.basic.utils.StrPool;
@@ -19,6 +20,7 @@ import cn.lmx.basic.utils.StrPool;
 public class GrayscaleLbConfig {
 
     @Bean
+    @Primary
     public ReactorLoadBalancer<ServiceInstance> reactorServiceInstanceLoadBalancer(Environment environment,
                                                                                    LoadBalancerClientFactory loadBalancerClientFactory) {
         String name = environment.getProperty(LoadBalancerClientFactory.PROPERTY_NAME, StrPool.EMPTY);

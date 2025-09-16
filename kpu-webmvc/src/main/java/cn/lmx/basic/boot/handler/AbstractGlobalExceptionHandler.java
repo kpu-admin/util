@@ -62,14 +62,14 @@ public abstract class AbstractGlobalExceptionHandler {
     @ExceptionHandler(BizException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public R<?> bizException(BizException ex) {
-        log.warn("BizException:", ex);
+        log.warn("BizException: path = {}", getPath(), ex);
         return R.result(ex.getCode(), null, ex.getMessage())
                 .setErrorMsg(getErrorMsg(ex)).setPath(getPath());
     }
 
     @ExceptionHandler(SaTokenException.class)
     public R<?> handlerSaTokenException(SaTokenException e) {
-        log.warn("SaTokenException:", e);
+        log.warn("SaTokenException: path = {}", getPath(), e);
         return R.result(e.getCode(), null, e.getMessage())
                 .setErrorMsg(getErrorMsg(e)).setPath(getPath());
     }
@@ -79,7 +79,7 @@ public abstract class AbstractGlobalExceptionHandler {
             throws Exception {
 
         // 打印堆栈，以供调试
-        nle.printStackTrace();
+        log.warn("NotLoginException: path =  {}", getPath(), nle);
 
         // 判断场景值，定制化异常信息
         String message = "";
@@ -173,7 +173,7 @@ public abstract class AbstractGlobalExceptionHandler {
     public R<?> methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex) {
         log.warn("MethodArgumentTypeMismatchException:", ex);
         String msg = "参数：[" + ex.getName() + "]的传入值：[" + ex.getValue() +
-                     "]与预期的字段类型：[" + Objects.requireNonNull(ex.getRequiredType()).getName() + "]不匹配";
+                "]与预期的字段类型：[" + Objects.requireNonNull(ex.getRequiredType()).getName() + "]不匹配";
         return R.result(ExceptionCode.PARAM_EX.getCode(), null, msg)
                 .setErrorMsg(getErrorMsg(ex)).setPath(getPath());
     }
@@ -348,6 +348,8 @@ public abstract class AbstractGlobalExceptionHandler {
         if (requestAttributes != null) {
             HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
             path = request.getRequestURI();
+        } else {
+            log.warn("无法获取 request");
         }
         return path;
     }

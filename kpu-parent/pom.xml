@@ -4,71 +4,71 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.4</version>
+        <version>3.5.4</version>
         <relativePath/>
     </parent>
     <groupId>cn.lmx.basic</groupId>
     <artifactId>kpu-parent</artifactId>
-    <version>1.0.0</version>
+    <version>${revision}</version>
     <packaging>pom</packaging>
 
     <modelVersion>4.0.0</modelVersion>
     <name>${project.artifactId}</name>
-    <description>Spring Boot 3.x项目依赖管理</description>
+    <description>管理项目的第三方依赖</description>
 
     <properties>
+        <revision>1.0.0</revision>
         <!--
-         1. spring-cloud-alibaba 2023.0.1.2 和 seata 2.2.0 不兼容
-         2. spring-cloud-alibaba 2023.0.3.2 的日志存在问题，配置方式变动很大
-         -->
+       1. spring-cloud-alibaba 2023.0.1.2 和 seata 2.2.0 不兼容，所以只能使用seata2.0.0
+       2. spring-cloud-alibaba 2023.0.3.3 和 seata 2.x.x 使用分布式事务时，代码有bug，无法正常切换数据源
+       -->
         <springdoc.version>2.8.5</springdoc.version>
         <knife4j-swagger-models-v3.version>2.2.28</knife4j-swagger-models-v3.version>
-
-        <spring-cloud-dependencies.version>2024.0.1</spring-cloud-dependencies.version>
-        <spring-cloud-alibaba-dependencies.version>2023.0.1.2</spring-cloud-alibaba-dependencies.version>
-        <spring-framework.version>6.2.5</spring-framework.version>
-        <dubbo.version>3.3.4</dubbo.version>
-        <smart-doc.version>3.1.0</smart-doc.version>
+        <spring-cloud-dependencies.version>2025.0.0</spring-cloud-dependencies.version>
+        <spring-cloud-alibaba-dependencies.version>2023.0.3.3</spring-cloud-alibaba-dependencies.version>
+        <spring-cloud-alibaba-seata-dependencies.version>2023.0.1.2</spring-cloud-alibaba-seata-dependencies.version>
+        <spring-framework.version>6.2.10</spring-framework.version>
         <seata.version>2.0.0</seata.version>
-        <nacos.version>2.5.1</nacos.version>
+        <nacos.version>3.0.3</nacos.version>
         <sentinel.version>1.8.6</sentinel.version>
-        <spring-boot-admin.version>3.4.5</spring-boot-admin.version>
+        <spring-boot-admin.version>3.5.2</spring-boot-admin.version>
         <dockerfile-maven-plugin.version>1.4.12</dockerfile-maven-plugin.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <commons-beanutils.version>1.9.4</commons-beanutils.version>
+        <dubbo.version>3.3.5</dubbo.version>
+        <smart-doc.version>3.1.1</smart-doc.version>
+        <torna-sdk.version>1.0.16</torna-sdk.version>
         <dm.version>8.1.3.140</dm.version>
-        <hutool.version>5.8.38</hutool.version>
+        <mysql.version>8.0.33</mysql.version>
+        <hutool.version>5.8.39</hutool.version>
         <lombok.version>1.18.38</lombok.version>
-        <sa-token.version>1.42.0</sa-token.version>
-        <magic-api.version>2.1.1</magic-api.version>
+        <sa-token.version>1.44.0</sa-token.version>
+        <magic-api.version>2.2.2</magic-api.version>
         <oshi.version>6.8.2</oshi.version>
-        <druid.version>1.2.24</druid.version>
+        <druid.version>1.2.27</druid.version>
         <mybatis.version>3.5.19</mybatis.version>
-        <mybatis-spring.version>3.0.4</mybatis-spring.version>
+        <mybatis-spring.version>3.0.5</mybatis-spring.version>
         <mybatis.typehandlers.version>1.0.2</mybatis.typehandlers.version>
-        <mybatis-plus.version>3.5.11</mybatis-plus.version>
+        <mybatis-plus.version>3.5.12</mybatis-plus.version>
+        <fastmybatis.version>3.1.7</fastmybatis.version>
         <dynamic.datasource.version>4.3.1</dynamic.datasource.version>
         <jasypt.version>3.0.5</jasypt.version>
         <p6spy.version>3.9.1</p6spy.version>
-        <fastjson2.version>2.0.57</fastjson2.version>
-        <easyexcel.version>4.0.3</easyexcel.version>
-        <poi.version>5.2.5</poi.version>
+        <fastjson2.version>2.0.58</fastjson2.version>
+        <fastexcel.version>1.2.0</fastexcel.version>
+        <poi.version>5.3.0</poi.version>
         <transmittable-thread-local.version>2.12.2</transmittable-thread-local.version>
         <knife4j.version>4.5.0</knife4j.version>
         <aviator.version>5.1.4</aviator.version>
         <groovy.version>4.0.26</groovy.version>
-        <guava.version>33.4.6-jre</guava.version>
-        <commons-exec.version>1.3</commons-exec.version>
-        <commons-email.version>1.5</commons-email.version>
-        <commons.collections4.version>4.4</commons.collections4.version>
-        <commons.collections.version>3.2.2</commons.collections.version>
-        <commons-lang.version>2.6</commons-lang.version>
-        <commons-io.version>2.15.0</commons-io.version>
-        <commons-logging.version>1.3.3</commons-logging.version>
-        <commons-fileupload.version>1.3.3</commons-fileupload.version>
+        <guava.version>33.4.8-jre</guava.version>
+        <commons-beanutils.version>1.11.0</commons-beanutils.version>
+        <commons-exec.version>1.5</commons-exec.version>
+        <commons-email.version>1.6.0</commons-email.version>
+        <commons-io.version>2.20.0</commons-io.version>
+        <commons-logging.version>1.3.5</commons-logging.version>
         <asm.version>5.0.4</asm.version>
         <tobato-fastdfs-client.version>1.27.3-SNAPSHOT</tobato-fastdfs-client.version>
         <tencentcloud-sdk-java.version>4.0.11</tencentcloud-sdk-java.version>
@@ -88,10 +88,30 @@
         <jsoup.version>1.15.3</jsoup.version>
         <JustAuth.version>1.16.5</JustAuth.version>
         <sun-jaxb.version>2.3.0.1</sun-jaxb.version>
-        <okio.version>2.10.0</okio.version>
-        <okhttp3.version>4.10.0</okhttp3.version>
-        <smart-doc.version>3.1.0</smart-doc.version>
+        <okio.version>3.12.0</okio.version>
+        <okhttp3.version>4.12.0</okhttp3.version>
     </properties>
+
+    <licenses>
+        <license>
+            <name>Apache 2</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>zuihou</id>
+            <name>zuihou</name>
+            <email>306479353@qq.com</email>
+            <roles>
+                <role>Java Development Engineer</role>
+            </roles>
+            <timezone>2020-03-12 17:50:10</timezone>
+        </developer>
+    </developers>
 
     <distributionManagement>
         <snapshotRepository>
@@ -120,7 +140,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-framework-bom</artifactId>
@@ -128,7 +147,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
             <dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi</artifactId>
@@ -136,14 +154,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <dependency>
-                <groupId>org.apache.dubbo</groupId>
-                <artifactId>dubbo-bom</artifactId>
-                <version>${dubbo.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
 
             <!-- 以上几个配置的顺序不能错，否则会导致 spring、springdoc 的版本不正确 -->
             <dependency>
@@ -153,6 +163,12 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>io.gitee.durcframework</groupId>
+                <artifactId>fastmybatis-spring-boot-starter</artifactId>
+                <version>${fastmybatis.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>com.alibaba.nacos</groupId>
                 <artifactId>nacos-client</artifactId>
@@ -185,6 +201,27 @@
             </dependency>
 
             <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-bom</artifactId>
+                <version>${dubbo.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- 文档生成 -->
+            <dependency>
+                <groupId>com.ly.smart-doc</groupId>
+                <artifactId>smart-doc</artifactId>
+                <version>${smart-doc.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.torna</groupId>
+                <artifactId>torna-sdk</artifactId>
+                <version>${torna-sdk.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>commons-logging</groupId>
                 <artifactId>commons-logging</artifactId>
                 <version>${commons-logging.version}</version>
@@ -202,6 +239,11 @@
                 <version>${magic-api.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
+                <version>${spring-cloud-alibaba-seata-dependencies.version}</version>
+            </dependency>
             <dependency>
                 <groupId>io.seata</groupId>
                 <artifactId>seata-spring-boot-starter</artifactId>
@@ -320,12 +362,6 @@
                 <artifactId>qiniu-java-sdk</artifactId>
                 <version>${qiniu-java-sdk.version}</version>
             </dependency>
-            <!-- FastDFS文件 -->
-            <dependency>
-                <groupId>cn.lmx.basic</groupId>
-                <artifactId>fastdfs-client</artifactId>
-                <version>${project.version}</version>
-            </dependency>
             <!--minio文件系统 -->
             <dependency>
                 <groupId>io.minio</groupId>
@@ -358,14 +394,14 @@
             </dependency>
             <!-- excel导入导出 -->
             <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>easyexcel</artifactId>
-                <version>${easyexcel.version}</version>
+                <groupId>cn.idev.excel</groupId>
+                <artifactId>fastexcel</artifactId>
+                <version>${fastexcel.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>easyexcel-core</artifactId>
-                <version>${easyexcel.version}</version>
+                <groupId>cn.idev.excel</groupId>
+                <artifactId>fastexcel-core</artifactId>
+                <version>${fastexcel.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.poi</groupId>
@@ -676,6 +712,33 @@
             </plugins>
         </pluginManagement>
 
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>1.2.7</version>
+                <configuration>
+                    <updatePomFile>true</updatePomFile>
+                    <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
         <!--                <plugins>-->
         <!--                    &lt;!&ndash; 编译插件 &ndash;&gt;-->
         <!--                    <plugin>-->
