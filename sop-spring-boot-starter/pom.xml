@@ -12,7 +12,8 @@
 
     <groupId>cn.lmx.basic</groupId>
     <artifactId>sop-spring-boot-starter</artifactId>
-
+    <name>${project.artifactId}</name>
+    
     <dependencies>
         <!-- 核心服务 -->
         <dependency>

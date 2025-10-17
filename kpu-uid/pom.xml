@@ -9,9 +9,8 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>kpu-uid</artifactId>
-
+    <name>${project.artifactId}</name>
 
     <dependencies>
         <!-- Spring -->

@@ -11,7 +11,7 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
     <artifactId>kpu-all</artifactId>
-
+    <name>${project.artifactId}</name>
     <modules>
         <module>kpu-all-boot</module>
         <module>kpu-all-cloud</module>
