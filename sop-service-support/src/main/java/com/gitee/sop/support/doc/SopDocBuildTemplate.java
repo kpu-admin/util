@@ -203,21 +203,14 @@ public class SopDocBuildTemplate extends RpcDocBuildTemplate {
     }
 
     @Override
-    public boolean isEntryPoint(JavaClass javaClass, FrameworkAnnotations frameworkAnnotations) {
-        // 必须是接口
-        if (!javaClass.isInterface()) {
-            return false;
-        }
-        List<JavaMethod> methods = javaClass.getMethods();
-        if (methods == null || methods.isEmpty()) {
-            return false;
-        }
-        for (JavaMethod method : methods) {
-            if (getOpenAnnotationInfo(method).isPresent()) {
-                return true;
-            }
-        }
-        return false;
+    public boolean skipMethod(JavaClass cls, JavaMethod method, ApiConfig apiConfig,
+                              ProjectDocConfigBuilder projectBuilder) {
+        return !this.getOpenAnnotationInfo(method).isPresent();
     }
 
+    @Override
+    public boolean isEntryPoint(JavaClass javaClass, FrameworkAnnotations frameworkAnnotations) {
+        // 必须是接口
+        return javaClass.isInterface();
+    }
 }
