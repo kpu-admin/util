@@ -3,37 +3,21 @@ package cn.lmx.basic.utils;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.date.LocalDateTimeUtil;
 import cn.hutool.core.util.StrUtil;
-import lombok.extern.slf4j.Slf4j;
 import cn.lmx.basic.exception.BizException;
+import lombok.extern.slf4j.Slf4j;
 
 import java.lang.management.ManagementFactory;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Duration;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-import static cn.hutool.core.date.DatePattern.CHINESE_DATE_PATTERN;
-import static cn.hutool.core.date.DatePattern.CHINESE_DATE_TIME_PATTERN;
-import static cn.hutool.core.date.DatePattern.NORM_DATETIME_PATTERN;
-import static cn.hutool.core.date.DatePattern.NORM_DATE_PATTERN;
-import static cn.hutool.core.date.DatePattern.NORM_TIME_PATTERN;
+import static cn.hutool.core.date.DatePattern.*;
 import static cn.lmx.basic.exception.BaseException.BASE_VALID_PARAM;
 
 /**
@@ -921,6 +905,7 @@ public final class DateUtils {
         } else if (time.matches("^\\d{4}-\\d{1,2}-\\d{1,2}T\\d{1,2}:\\d{1,2}:\\d{1,2}.\\d{3}Z$")) {
             startTime = time.replace("T", " ").substring(0, time.indexOf('.'));
         }
+
         return LocalDateTimeUtil.beginOfDay(LocalDateTime.parse(startTime, DateTimeFormatter.ofPattern(DEFAULT_DATE_TIME_FORMAT)));
     }
 
