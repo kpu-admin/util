@@ -46,7 +46,9 @@ public class TimeZoneUtil {
         Objects.requireNonNull(toZone, "toZone 不能为空");
 
         // 需要一个日期基准，否则 LocalTime 无法确定时间点
-        if (baseDate == null) baseDate = LocalDate.now(fromZone);
+        if (baseDate == null) {
+            baseDate = LocalDate.now(fromZone);
+        }
         LocalDateTime ldt = LocalDateTime.of(baseDate, localTime);
         return convert(ldt, fromZone, toZone).toLocalTime();
     }

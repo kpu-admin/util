@@ -8,6 +8,12 @@ import cn.idev.excel.EasyExcel;
 import cn.idev.excel.annotation.ExcelProperty;
 import cn.idev.excel.exception.ExcelDataConvertException;
 import cn.idev.excel.metadata.property.ExcelContentProperty;
+import cn.lmx.basic.base.R;
+import cn.lmx.basic.base.entity.SuperEntity;
+import cn.lmx.basic.base.request.PageParams;
+import cn.lmx.basic.base.service.SuperCacheService;
+import cn.lmx.basic.utils.BeanPlusUtil;
+import cn.lmx.basic.validator.utils.ValidatorUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,12 +26,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import cn.lmx.basic.base.R;
-import cn.lmx.basic.base.entity.SuperEntity;
-import cn.lmx.basic.base.request.PageParams;
-import cn.lmx.basic.base.service.SuperCacheService;
-import cn.lmx.basic.utils.BeanPlusUtil;
-import cn.lmx.basic.validator.utils.ValidatorUtils;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -140,7 +140,7 @@ public abstract class SuperExcelController<S extends SuperCacheService<Id, Entit
             ExcelProperty excelProperty = field.getAnnotation(ExcelProperty.class);
             String name = "";
             if (excelProperty != null) {
-                name = StrUtil.join(".", excelProperty.value());
+                name = StrUtil.join(".", (Object[]) excelProperty.value());
             } else {
                 Schema apiModelProperty = field.getAnnotation(Schema.class);
                 if (apiModelProperty != null) {

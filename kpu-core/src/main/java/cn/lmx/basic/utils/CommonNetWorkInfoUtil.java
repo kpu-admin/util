@@ -28,7 +28,6 @@ public class CommonNetWorkInfoUtil {
     /**
      * 获取网络上下行速率，格式{"UP": "123KB/S, "DOWN": "345KB/S"}
      *
-     * @author xuyuxiang
      * @date 2022/9/1 23:51
      */
     public static Map<String, String> getNetworkUpRate() {

@@ -3,13 +3,13 @@ package cn.lmx.basic.validator.utils;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.idev.excel.annotation.ExcelProperty;
 import cn.lmx.basic.annotation.constraints.NotEmptyPattern;
 import cn.lmx.basic.exception.BizException;
 import cn.lmx.basic.validator.constraintvalidators.LengthConstraintValidator;
 import cn.lmx.basic.validator.constraintvalidators.NotEmptyConstraintValidator;
 import cn.lmx.basic.validator.constraintvalidators.NotEmptyPatternConstraintValidator;
 import cn.lmx.basic.validator.constraintvalidators.NotNullConstraintValidator;
-import cn.idev.excel.annotation.ExcelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Configuration;
 import jakarta.validation.ConstraintViolation;
@@ -93,7 +93,7 @@ public class ValidatorUtils {
                     Schema apiModelProperty = field.getAnnotation(Schema.class);
                     name = apiModelProperty != null ? apiModelProperty.description() : "";
                 } else {
-                    name = StrUtil.join(".", excelProperty.value());
+                    name = StrUtil.join(".", (Object[]) excelProperty.value());
                 }
 
                 log.warn("{}:{} :{}", name, cv.getPropertyPath(), cv.getMessage());
@@ -117,7 +117,7 @@ public class ValidatorUtils {
                     ExcelProperty excelProperty = field.getAnnotation(ExcelProperty.class);
                     String name = "";
                     if (excelProperty != null) {
-                        name = StrUtil.join(".", excelProperty.value());
+                        name = StrUtil.join(".", (Object[]) excelProperty.value());
                     }
                     if (StrUtil.isEmpty(name)) {
                         Schema apiModelProperty = field.getAnnotation(Schema.class);
