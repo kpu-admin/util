@@ -54,18 +54,6 @@
         </license>
     </licenses>
 
-    <developers>
-        <developer>
-            <id>zuihou</id>
-            <name>zuihou</name>
-            <email>306479353@qq.com</email>
-            <roles>
-                <role>Java Development Engineer</role>
-            </roles>
-            <timezone>2020-03-12 17:50:10</timezone>
-        </developer>
-    </developers>
-
     <distributionManagement>
         <snapshotRepository>
             <id>oss</id>

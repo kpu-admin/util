@@ -14,8 +14,8 @@ import java.util.List;
 /**
  * 长度 转换器
  *
- * @author zuihou
- * @date 2019-07-25 15:15
+ * @author lmx
+ * @date 2025-01-01 00:00
  */
 public class RangeConstraintConverter extends BaseConstraintConverter implements IConstraintConverter {
 
