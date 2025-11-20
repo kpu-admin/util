@@ -33,12 +33,23 @@ public final class ContextConstants {
      */
     public static final String JWT_KEY_USER_ID = "UserId";
     /**
-     * JWT中封装的 员工id
+     * JWT中封装的 用户登录终端
      */
-    public static final String JWT_KEY_EMPLOYEE_ID = "EmployeeId";
+    public static final String JWT_KEY_TYPE_HEADER = "typeHeader";
+    /**
+     * JWT中封装的 用户登录系统
+     */
+    public static final String JWT_KEY_SYSTEM_TYPE_HEADER = "systemTypeHeader";
+    /**
+     * JWT中封装的 子系统用户id
+     */
+    public static final String JWT_KEY_U_ID = "uid";
     public static final String JWT_KEY_COMPANY_ID = "CurrentCompanyId";
     public static final String JWT_KEY_TOP_COMPANY_ID = "CurrentTopCompanyId";
     public static final String JWT_KEY_DEPT_ID = "CurrentDeptId";
+    public static final String JWT_KEY_DEVICE = "loginDevice";
+    public static final String JWT_KEY_SYSTEM_TYPE = "systemType";
+
     /**
      * JWT中封装的 随机数
      */
@@ -49,9 +60,21 @@ public final class ContextConstants {
      */
     public static final String USER_ID_HEADER = JWT_KEY_USER_ID;
     /**
+     * 请求头和线程变量中的 客户端IP
+     */
+    public static final String HEADER_REQUEST_IP = "HEADER_REQUEST_IP";
+//    /**
+//     * 请求头和线程变量中的 员工ID
+//     */
+//    public static final String EMPLOYEE_ID_HEADER = JWT_KEY_EMPLOYEE_ID;
+    /**
+     * 请求头和线程变量中的 用户登录系统
+     */
+    public static final String LOGIN_SYSTEM_TYPE_HEADER = JWT_KEY_SYSTEM_TYPE_HEADER;
+    /**
      * 请求头和线程变量中的 员工ID
      */
-    public static final String EMPLOYEE_ID_HEADER = JWT_KEY_EMPLOYEE_ID;
+    public static final String U_ID_HEADER = JWT_KEY_U_ID;
     /**
      * 请求头和线程变量中的 当前单位ID
      */
@@ -84,6 +107,10 @@ public final class ContextConstants {
      * 请求头和线程变量中的 客户端id
      */
     public static final String CLIENT_ID_HEADER = "ClientId";
+    /**
+     * 客户端id
+     */
+    public static final String CLIENT_ID = CLIENT_ID_HEADER;
     /**
      * 是否boot项目
      */

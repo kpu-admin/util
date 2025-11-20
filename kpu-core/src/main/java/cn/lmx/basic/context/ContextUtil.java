@@ -94,27 +94,58 @@ public final class ContextUtil {
     }
 
     /**
-     * 员工id
+     * 用户登录系统
+     *
+     * @return 登录系统
      */
-    public static Long getEmployeeId() {
-        return get(ContextConstants.EMPLOYEE_ID_HEADER, Long.class);
+    public static String getSystemType() {
+        return get(ContextConstants.LOGIN_SYSTEM_TYPE_HEADER, String.class);
     }
 
     /**
-     * 员工id
+     * 设置用户登录系统
      *
-     * @param employeeId 员工id
+     * @param typeHeader 用户登录系统
      */
-    public static void setEmployeeId(Object employeeId) {
-        set(ContextConstants.EMPLOYEE_ID_HEADER, employeeId);
+    public static void setSystemType(String typeHeader) {
+        set(ContextConstants.LOGIN_SYSTEM_TYPE_HEADER, typeHeader);
+    }
+
+    /**
+     * 子系统id
+     */
+    public static Long getUid() {
+        return get(ContextConstants.U_ID_HEADER, Long.class);
+    }
+
+    /**
+     * 设置子系统id
+     *
+     * @param uid 子系统id
+     */
+    public static void setUid(Object uid) {
+        set(ContextConstants.U_ID_HEADER, uid);
+    }
+    /**
+     * @param ip 客户端ip
+     */
+    public static void setIP(String ip) {
+        set(ContextConstants.HEADER_REQUEST_IP, ip);
+    }
+
+    /**
+     * 客户端ip
+     */
+    public static String getIP() {
+        return get(ContextConstants.HEADER_REQUEST_IP, String.class);
     }
 
     public static boolean isEmptyUserId() {
         return isEmptyLong(ContextConstants.USER_ID_HEADER);
     }
 
-    public static boolean isEmptyEmployeeId() {
-        return isEmptyLong(ContextConstants.EMPLOYEE_ID_HEADER);
+    public static boolean isEmptyUId() {
+        return isEmptyLong(ContextConstants.U_ID_HEADER);
     }
 
     public static boolean isEmptyApplicationId() {
