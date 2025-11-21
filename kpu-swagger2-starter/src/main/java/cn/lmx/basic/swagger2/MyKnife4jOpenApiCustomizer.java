@@ -5,13 +5,12 @@ import com.github.xiaoymin.knife4j.core.conf.ExtensionsConstants;
 import com.github.xiaoymin.knife4j.core.conf.GlobalConstants;
 import com.github.xiaoymin.knife4j.spring.configuration.Knife4jProperties;
 import com.github.xiaoymin.knife4j.spring.configuration.Knife4jSetting;
+import com.github.xiaoymin.knife4j.spring.extension.Knife4jOpenApiCustomizer;
 import com.github.xiaoymin.knife4j.spring.extension.OpenApiExtensionResolver;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.models.OpenAPI;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
-import org.springdoc.core.customizers.GlobalOpenApiCustomizer;
 import org.springdoc.core.properties.SpringDocConfigProperties;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
@@ -20,12 +19,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.lang.annotation.Annotation;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -36,12 +30,17 @@ import java.util.stream.Collectors;
  * @date 2025-01-01 00:00
  */
 @Slf4j
-@AllArgsConstructor
-public class MyKnife4jOpenApiCustomizer implements GlobalOpenApiCustomizer {
+public class MyKnife4jOpenApiCustomizer extends Knife4jOpenApiCustomizer {
+
 
     final Knife4jProperties knife4jProperties;
     final SpringDocConfigProperties properties;
 
+    public MyKnife4jOpenApiCustomizer(Knife4jProperties knife4jProperties, SpringDocConfigProperties properties) {
+        super(knife4jProperties, properties);
+        this.knife4jProperties = knife4jProperties;
+        this.properties = properties;
+    }
 
     @Override
     public void customise(OpenAPI openApi) {
