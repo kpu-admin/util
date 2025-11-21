@@ -5,6 +5,8 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import cn.lmx.basic.utils.ArgumentAssert;
@@ -47,6 +49,12 @@ import java.util.ArrayList;
  */
 @FunctionalInterface
 public interface CacheKeyBuilder {
+    class Key {
+        @Getter
+        @Setter
+        private static String prefix;
+
+    }
 
     /**
      * 缓存前缀，用于区分项目，环境等等
@@ -54,18 +62,7 @@ public interface CacheKeyBuilder {
      * @return 缓存前缀
      */
     default String getPrefix() {
-        return null;
-    }
-
-    /**
-     * 租户ID，用于区分租户
-     * <p>
-     * 非租户模式设置成空字符串
-     *
-     * @return 租户ID
-     */
-    default String getTenant() {
-        return null;
+        return Key.getPrefix();
     }
 
     /**
@@ -95,6 +92,7 @@ public interface CacheKeyBuilder {
      */
     @NonNull
     String getTable();
+
 
     /**
      * key的字段名， 用于区分字段
@@ -189,11 +187,6 @@ public interface CacheKeyBuilder {
             regionList.add(prefix);
         }
 
-        String tenant = this.getTenant();
-        // 租户编码：存储默认库的全局缓存，可以重写getTenant并返回null
-        if (StrUtil.isNotEmpty(tenant)) {
-            regionList.add(tenant);
-        }
         // 服务模块名
         String modular = getModular();
         if (StrUtil.isNotEmpty(modular)) {

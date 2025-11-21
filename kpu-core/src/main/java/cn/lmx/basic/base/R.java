@@ -1,16 +1,19 @@
 package cn.lmx.basic.base;
 
+import cn.lmx.basic.exception.BizException;
+import cn.lmx.basic.exception.code.BaseExceptionCode;
+import cn.lmx.basic.jackson.JsonUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import cn.lmx.basic.exception.BizException;
-import cn.lmx.basic.exception.code.BaseExceptionCode;
-import cn.lmx.basic.jackson.JsonUtil;
+import org.slf4j.MDC;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static cn.lmx.basic.context.ContextConstants.TRACE_ID_HEADER;
 
 
 /**
@@ -79,9 +82,13 @@ public class R<T> {
     @Schema(description = "异常消息")
     private String errorMsg = "";
 
+    @Schema(description = "追踪ID")
+    private String trace;
+
     private R() {
         this.defExec = false;
         this.timestamp = System.currentTimeMillis();
+        this.trace = MDC.get(TRACE_ID_HEADER);
     }
 
     public R(int code, T data, String msg) {
@@ -90,6 +97,7 @@ public class R<T> {
         this.msg = msg;
         this.defExec = false;
         this.timestamp = System.currentTimeMillis();
+        this.trace = MDC.get(TRACE_ID_HEADER);
     }
 
     public R(int code, T data, String msg, String errorMsg) {
